@@ -1,0 +1,19 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# Mobile Boilerplate
+  Repository URL: https://github.com/h5bp/mobile-boilerplate
+  From Last Commit: 9b5e675528aae43ff237afd3a99c85c09af27106
+
+# TEAM
+
+    <name> -- <role> -- <twitter>
+
+# THANKS
+
+    <name>
+
+# TECHNOLOGY COLOPHON
+
+    HTML5, CSS3, Jade, Sass
+    jQuery, Modernizr, Gulp

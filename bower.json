@@ -1,0 +1,49 @@
+{
+  "name": "Integrated Security Solutions",
+  "description": "Mobile App for ISS",
+  "keywords": [
+    "home",
+    "security",
+    "automation"
+  ],
+  "version": "0.0.1",
+  "authors": [
+    "Wayne Cheah <cheah@kokweng.io>"
+  ],
+  "homepage": "innerzon.com",
+  "dependencies": {
+    "es5-shim": "~3.1.1",
+    "json3": "~3.3.1",
+    "angular": "~1.2.16",
+    "angular-animate": "~1.2.16",
+    "angular-bootstrap": "~0.11.0",
+    "angular-gettext": "~0.2.8",
+    "angular-resource": "~1.2.16",
+    "angular-route": "~1.2.16",
+    "angular-sanitize": "~1.2.16"
+  },
+  "overrides": {
+    "es5-shim": {
+      "ignore": true
+    },
+    "json3": {
+      "ignore": true
+    }
+  },
+  "main": "app/scripts/main.coffee",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "license": "MIT"
+}

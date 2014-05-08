@@ -1,0 +1,62 @@
+{
+  "name": "iss",
+  "description": "Integrated Security Solutions",
+  "keywords": [
+    "home",
+    "security",
+    "automation"
+  ],
+  "version": "0.0.1",
+  "author": {
+    "name": "Wayne Cheah",
+    "email": "cheah@kokweng.io",
+    "url": "http://www.kokweng.io"
+  },
+  "devDependencies": {
+    "gulp": "^3.6.2",
+    "gulp-angular-gettext": "^0.3.0",
+    "gulp-autoprefixer": "~0.0.6",
+    "gulp-bower-files": "^0.2.1",
+    "gulp-bytediff": "^0.1.8",
+    "gulp-cache": "~0.1.1",
+    "gulp-changed": "^0.3.0",
+    "gulp-clean": "~0.2.4",
+    "gulp-coffee": "^1.4.1",
+    "gulp-coffeelint": "^0.3.2",
+    "gulp-connect": "~1.0.0",
+    "gulp-csso": "^0.2.6",
+    "gulp-filter": "^0.4.1",
+    "gulp-flatten": "^0.0.2",
+    "gulp-htmlmin": "^0.1.2",
+    "gulp-imagemin": "~0.1.4",
+    "gulp-inject": "^0.4.1",
+    "gulp-jade": "^0.4.2",
+    "gulp-jshint": "~1.4.0",
+    "gulp-load-plugins": "~0.3.0",
+    "gulp-sass": "^0.7.1",
+    "gulp-size": "~0.1.2",
+    "gulp-uglify": "^0.2.1",
+    "gulp-useref": "^0.4.3",
+    "gulp-util": "^2.2.14",
+    "jshint-stylish": "^0.1.5",
+    "run-sequence": "^0.3.6",
+    "wiredep": "^1.4.3"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "main": "gulpfile.js",
+  "scripts": {
+    "start": "node --harmony app.js",
+    "debug": "node debug app.js",
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/waynecheah/iss.git"
+  },
+  "bugs": {
+    "url": "https://github.com/waynecheah/iss/issues"
+  },
+  "license": "ISC"
+}
