@@ -216,7 +216,7 @@ gulp.task('inject', function(){
                 build_dir+'/scripts/**/*.js',
                 app_dir+'/scripts/**/*.js',
                 '!'+app_dir+'/scripts/vendor/modernizr-2.7.1.min.js',
-                '!'+build_dir+'/styles/main.css',
+                build_dir+'/styles/main.css',
                 build_dir+'/styles/**/*.css',
                 app_dir+'/styles/**/*.css',
                 '!'+app_dir+'/styles/404.css'

@@ -20,7 +20,8 @@
     "angular-gettext": "~0.2.8",
     "angular-resource": "~1.2.16",
     "angular-route": "~1.2.16",
-    "angular-sanitize": "~1.2.16"
+    "angular-sanitize": "~1.2.16",
+    "bootstrap": "~3.1.1"
   },
   "overrides": {
     "es5-shim": {
