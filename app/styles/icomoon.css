@@ -1,0 +1,236 @@
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot');
+	src:url('../fonts/icomoon.eot') format('embedded-opentype'),
+		url('../fonts/icomoon.woff') format('woff'),
+		url('../fonts/icomoon.ttf') format('truetype'),
+		url('../fonts/icomoon.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+ [class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: 'icomoon';
+    font-size: 1.7em;
+    speak: none;
+    font-style: normal;
+    font-weight: 100;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+     vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-user:before {
+    content: "\e602";
+}
+.icon-params:before {
+    content: "\e607";
+}
+.icon-photo:before {
+    content: "\e60a";
+}
+.icon-shop:before {
+    content: "\e60e";
+}
+.icon-search:before {
+    content: "\e610";
+}
+.icon-phone:before {
+    content: "\e611";
+}
+.icon-calendar:before {
+    content: "\e615";
+}
+.icon-eye:before {
+    content: "\e616";
+}
+.icon-pen:before {
+    content: "\e617";
+}
+.icon-key:before {
+    content: "\e618";
+}
+.icon-Phone:before {
+    content: "\e600";
+}
+.icon-Phone2:before {
+    content: "\e626";
+}
+.icon-PhoneFail:before {
+    content: "\e62c";
+}
+.icon-Left:before {
+    content: "\e613";
+}
+.icon-Right:before {
+    content: "\e61c";
+}
+.icon-PowerAdapter:before {
+    content: "\e640";
+}
+.icon-Battery:before {
+    content: "\e641";
+}
+.icon-PowerAdapter2:before {
+    content: "\e61b";
+}
+.icon-Gsm:before {
+    content: "\e61d";
+}
+.icon-CommFail:before {
+    content: "\e61e";
+}
+.icon-Peripheral:before {
+    content: "\e61f";
+}
+.icon-Log:before {
+    content: "\e620";
+}
+.icon-Security:before {
+    content: "\e621";
+}
+.icon-Add:before {
+    content: "\e622";
+}
+.icon-Minus:before {
+    content: "\e642";
+}
+.icon-HomeAlarm:before {
+    content: "\e624";
+}
+.icon-Wave:before {
+    content: "\e623";
+}
+.icon-IZWave:before {
+    content: "\e625";
+}
+.icon-Security3:before {
+    content: "\e643";
+}
+.icon-Security2:before {
+    content: "\e644";
+}
+.icon-Health:before {
+    content: "\e645";
+}
+.icon-Earth:before {
+    content: "\e646";
+}
+.icon-Siren:before {
+    content: "\e612";
+}
+.icon-MenuBox:before {
+    content: "\e619";
+}
+.icon-MainMenu:before {
+    content: "\e604";
+}
+.icon-Back:before {
+    content: "\e605";
+}
+.icon-Forward:before {
+    content: "\e647";
+}
+.icon-IZ:before {
+    content: "\e648";
+}
+.icon-Cctv:before {
+    content: "\e60c";
+}
+.icon-Share:before {
+    content: "\e609";
+}
+.icon-Star:before {
+    content: "\e60b";
+}
+.icon-Heart:before {
+    content: "\e60d";
+}
+.icon-CloudSync:before {
+    content: "\e63b";
+}
+.icon-ServerSync:before {
+    content: "\e614";
+}
+.icon-House:before {
+    content: "\e63a";
+}
+.icon-UnLock:before {
+    content: "\e63c";
+}
+.icon-Locked:before {
+    content: "\e63e";
+}
+.icon-Bulb:before {
+    content: "\e649";
+}
+.icon-Location:before {
+    content: "\e627";
+}
+.icon-Server:before {
+    content: "\e62a";
+}
+.icon-AlarmClock:before {
+    content: "\e62b";
+}
+.icon-Clock:before {
+    content: "\e628";
+}
+.icon-Timer:before {
+    content: "\e629";
+}
+.icon-IZCircle:before {
+    content: "\e64a";
+}
+.icon-Zone20:before {
+    content: "\e603";
+}
+.icon-Zone8:before {
+    content: "\e606";
+}
+.icon-Trash:before {
+    content: "\e61a";
+}
+.icon-Email:before {
+    content: "\e62d";
+}
+.icon-Sms:before {
+    content: "\e601";
+}
+.icon-Mail:before {
+    content: "\e62e";
+}
+.icon-iMac:before {
+    content: "\e62f";
+}
+.icon-Message:before {
+    content: "\e635";
+}
+.icon-True:before {
+    content: "\e636";
+}
+.icon-False:before {
+    content: "\e637";
+}
+.icon-Refresh:before {
+    content: "\e638";
+}
+.icon-Setting:before {
+    content: "\e639";
+}
+.icon-facebook:before {
+    content: "\e806";
+}
+.icon-gplus:before {
+    content: "\e80d";
+}
+.icon-info:before {
+    content: "\e80c";
+}
