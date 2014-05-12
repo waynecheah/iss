@@ -11,10 +11,10 @@ glApp =
     'gettext'
   ]
 
-#  .run (gettextCatalog) ->
-#      #gettextCatalog.currentLanguage = 'zh_CN'
-#      gettextCatalog.debug           = true
-#      return
+  .run (gettextCatalog) ->
+      #gettextCatalog.currentLanguage = 'zh_CN'
+      gettextCatalog.debug           = true
+      return
 
 #  .config ($httpProvider) ->
 #      delete $httpProvider.defaults.headers.common['X-Requested-With']
@@ -24,14 +24,17 @@ glApp =
   .config ($routeProvider) ->
       $routeProvider
       .when '/',
+          templateUrl: '2_menu-page.s'
+          controller: 'MenuCtrl'
+      .when '/alarm',
           templateUrl: '3_dashboard'
           controller: 'MainCtrl'
       .when '/alarm/zones',
           templateUrl: '4.1_alarm-page'
           controller: 'AlarmCtrl'
       .when '/alarm/system',
-          templateUrl: '2_menu-page.s'
-          controller: 'MenuCtrl'
+          templateUrl: '4.2_alarm-page'
+          controller: 'SystemCtrl'
       .otherwise
           redirectTo: '/'
       return

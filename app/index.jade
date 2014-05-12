@@ -49,7 +49,7 @@ html.no-js
   body(ng-app='glApp')
 
     // Add site or application content here
-    #pt-main.container.pt-perspective(ng-controller='AppCtrl', class='{{backFxClass}}')
+    #pt-main.container(ng-controller='AppCtrl', class='pt-perspective {{backFxClass}} {{singleFx}}')
       .pt-page.row(ng-view, class='{{pageFxClass}}')
 
     //[if lt IE 9]><![endif]
@@ -65,11 +65,14 @@ html.no-js
     // endbuild 
 
     script(type='text/ng-template', id='2_menu-page.s')
-      div.pt-page
-        .bodyWrap(page-body)
+      .pt-page.mainmenu
+        .text-center(style='margin:50px 0 20px;')
+          span.icon-IZCircle(style='font-size:56px;')
+        ul.mainmenu
+          li(ng-repeat='item in items', translate) {{ item | isLink }}
     
     script(type='text/ng-template', id='3_dashboard')
-      div.pt-page.bgRed.tallHeader.lgRow
+      .pt-page.bgRed.tallHeader.lgRow
         .header(page-head)
           icon-title
         div.bodyWrap(page-body)
@@ -77,7 +80,13 @@ html.no-js
       button(ng-click='updateZones()') Update
 
     script(type='text/ng-template', id='4.1_alarm-page')
-      div.pt-page.bgRed.tallHeader
+      .pt-page.bgRed.tallHeader
+        .header(page-head)
+          icon-title
+        .bodyWrap(page-body)
+
+    script(type='text/ng-template', id='4.2_alarm-page')
+      .pt-page.bgRed.tallHeader
         .header(page-head)
           icon-title
         .bodyWrap(page-body)

@@ -3,9 +3,9 @@
 glApp
 
 .controller 'AppCtrl', ($scope, $rootScope, $route, $timeout) ->
-    history  = []
-    freezeFx = ''
-    getIndex = (route) ->
+    history   = []
+    oneFxCtrl = ''
+    getIndex  = (route) ->
         return false if route.indexOf('_') < 1
         a = route.split '_'
         parseFloat a[0]
@@ -20,11 +20,14 @@ glApp
     # END isSingleFx
 
     $rootScope.pageFx = (ctrl, fx='slide') ->
-        console.log 'calling from ', ctrl, fx
-        if freezeFx
-            fx = unless ctrl is freezeFx then 'nofx' else fx
+        console.log 'goto controller:', ctrl, fx
+        if oneFxCtrl
+            cls = if fx.substr(0, 4) is 'one-' then fx else "one-#{fx}"
+            fx  = if ctrl is oneFxCtrl then cls else fx
         else
             fx
+        console.log 'use fx:', fx
+        fx
 
     $rootScope.$on '$routeChangeSuccess', (e, current, previous) ->
         current   = angular.fromJson current
@@ -43,14 +46,18 @@ glApp
             singleFx    = isSingleFx curr_url, prev_url
 
             if singleFx
+                $scope.singleFx = 'singleFx'
+                console.info 'this page change use single fx'
                 curr_ctrl = current.$$route.controller
                 prev_ctrl = previous.$$route.controller
-                freezeFx  = if singleFx is 1 then prev_ctrl else curr_ctrl
+                oneFxCtrl = if singleFx is 1 then curr_ctrl else prev_ctrl # Only slide this ctrl
+                console.info 'Only slide this ctrl', oneFxCtrl
             else
-                freezeFx = ''
+                $scope.singleFx = ''
+                oneFxCtrl       = ''
 
             if current_id < previous_id
-                console.warn 'Current index is smaller!'
+                console.warn 'Current index is smaller! Page uses reverse fx'
                 $scope.backFxClass = 'back'
                 $timeout ->
                     $scope.backFxClass = ''
@@ -67,26 +74,26 @@ glApp
     return
 
 .controller 'MenuCtrl', ($scope, $rootScope) ->
-    $scope.pageFxClass = 'slide'
+    $scope.pageFxClass = $rootScope.pageFx 'MenuCtrl', 'one-slide'
     $scope.items = [
         name: 'Wave'
-        href: '#/alarm/zones'
+        href: '#/alarm'
     ,
         name: 'Profile'
-        href: '#/Profile'
+        href: ''
     ,
         name: 'Settings'
-        href: '#/settings'
+        href: ''
     ,
         name: 'Add Device'
-        href: '#/addDevice'
+        href: ''
     ,
         name: 'Logout'
-        href: '#/logout'
+        href: '#/signin'
     ]
     return
 
-.controller 'MainCtrl', ($scope, $rootScope) ->
+.controller 'MainCtrl', ($scope, $rootScope, $location) ->
     $scope.pageFxClass = $rootScope.pageFx 'MainCtrl'
     $scope.title       = 'Alarm Dashboard'
     $scope.leftIco     = 'icon-MainMenu'
@@ -94,6 +101,7 @@ glApp
     $scope.icon        = 'icon-IZ'
     $scope.onLeftIcon  = ->
         console.info 'Main menu on click'
+        $location.path '/'
         return
 
     $scope.zones = 5
@@ -158,3 +166,41 @@ glApp
         status: 'ByPass'
     ]
     return
+
+.controller 'SystemCtrl', ($scope, $rootScope, $window) ->
+        $scope.pageFxClass = $rootScope.pageFx 'SystemCtrl'
+        $scope.title       = 'Home Alarm'
+        $scope.leftIco     = 'icon-Back'
+        $scope.icon        = 'icon-AlarmClock'
+        $scope.onLeftIcon  = ->
+            console.info 'back button on click'
+            $window.history.back()
+            return
+
+        $scope.items = [
+            leftIco: 'icon-PowerAdapter'
+            name: 'AC'
+            status: 'Ok'
+        ,
+            leftIco: 'icon-MenuBox'
+            name: 'Battery'
+            status: 'Ok'
+        ,
+            leftIco: 'icon-Phone'
+            name: 'PSTN'
+            status: 'Ok'
+        ,
+            leftIco: 'icon-Siren'
+            name: 'Bell'
+            status: 'Ok'
+        ,
+            leftIco: 'icon-iMac'
+            name: 'Peripheral'
+            status: 'Ok'
+        ]
+        return
+
+
+.filter 'isLink', ->
+    (data) ->
+        if 'href' of data is on and data.href then "<a href='#{data.href}'>#{data.name}</a>" else data.name
