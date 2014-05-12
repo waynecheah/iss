@@ -7,6 +7,7 @@ glApp =
     'ngResource'
     'ngSanitize'
     'ngRoute'
+    'ngTouch'
     'gettext'
   ]
 
@@ -23,11 +24,14 @@ glApp =
   .config ($routeProvider) ->
       $routeProvider
       .when '/',
-          templateUrl: 'scripts/main.html'
+          templateUrl: '3_dashboard'
           controller: 'MainCtrl'
-      .when '/about',
-          templateUrl: 'scripts/about.html'
-          controller: 'MainCtrl'
+      .when '/alarm/zones',
+          templateUrl: '4.1_alarm-page'
+          controller: 'AlarmCtrl'
+      .when '/alarm/system',
+          templateUrl: '2_menu-page.s'
+          controller: 'MenuCtrl'
       .otherwise
           redirectTo: '/'
       return

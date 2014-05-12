@@ -49,10 +49,8 @@ html.no-js
   body(ng-app='glApp')
 
     // Add site or application content here
-    section#pt-page.container.pt-perspective(ng-controller='AppCtrl')
-      .main-content.row
-        .row
-          .col-sm-12(ng-view='')
+    #pt-main.container.pt-perspective(ng-controller='AppCtrl', class='{{backFxClass}}')
+      .pt-page.row(ng-view, class='{{pageFxClass}}')
 
     //[if lt IE 9]><![endif]
 
@@ -65,3 +63,21 @@ html.no-js
     // inject:js 
     // endinject 
     // endbuild 
+
+    script(type='text/ng-template', id='2_menu-page.s')
+      div.pt-page
+        .bodyWrap(page-body)
+    
+    script(type='text/ng-template', id='3_dashboard')
+      div.pt-page.bgRed.tallHeader.lgRow
+        .header(page-head)
+          icon-title
+        div.bodyWrap(page-body)
+      input(type='number', ng-model='zones', value='2')
+      button(ng-click='updateZones()') Update
+
+    script(type='text/ng-template', id='4.1_alarm-page')
+      div.pt-page.bgRed.tallHeader
+        .header(page-head)
+          icon-title
+        .bodyWrap(page-body)
