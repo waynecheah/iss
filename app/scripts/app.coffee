@@ -6,7 +6,7 @@ glApp =
     'ngAnimate'
     'ngResource'
     'ngSanitize'
-    'ngRoute'
+    'ui.router'#'ngRoute'
     'ngTouch'
     'gettext'
   ]
@@ -16,27 +16,44 @@ glApp =
       gettextCatalog.debug           = true
       return
 
-#  .config ($httpProvider) ->
-#      delete $httpProvider.defaults.headers.common['X-Requested-With']
-#      $httpProvider.interceptors.push 'authInterceptor'
-#      return
+  .config ($httpProvider) ->
+      delete $httpProvider.defaults.headers.common['X-Requested-With']
+      #$httpProvider.interceptors.push 'authInterceptor'
+      return
 
-  .config ($routeProvider) ->
-      $routeProvider
-      .when '/',
-          templateUrl: '2_menu-page.s'
-          controller: 'MenuCtrl'
-      .when '/alarm',
-          templateUrl: '3_dashboard'
-          controller: 'MainCtrl'
-      .when '/alarm/zones',
-          templateUrl: '4.1_alarm-page'
-          controller: 'AlarmCtrl'
-      .when '/alarm/system',
-          templateUrl: '4.2_alarm-page'
-          controller: 'SystemCtrl'
-      .otherwise
-          redirectTo: '/'
+  .config ($stateProvider, $urlRouterProvider) ->
+      $urlRouterProvider.otherwise '/'
+      $stateProvider
+          .state 'mainmenu',
+              url: '/'
+              templateUrl: '2_menu-page.s'
+              controller: 'MenuCtrl'
+
+          .state 'dashboard',
+              url: '/wave'
+              templateUrl: '3_dashboard'
+              controller: 'MainCtrl'
+
+          .state 'alarm',
+              url: '/alarm'
+              templateUrl: '4_alarm-page'
+              controller: 'AlarmCtrl'
+          .state 'alarm.zones',
+              url: '/zones'
+              templateUrl: '4.1_zones-page'
+              controller: 'Alarm.ZonesCtrl'
+          .state 'alarm.system',
+              url: '/system'
+              templateUrl: '4.2_system-page'
+              controller: 'Alarm.SystemCtrl'
+          .state 'alarm.emergency',
+              url: '/emergency'
+              templateUrl: '4.3_emergency-page'
+              controller: 'Alarm.EmergencyCtrl'
+          .state 'alarm.logs',
+              url: '/logs'
+              templateUrl: '4.4_logs-page'
+              controller: 'Alarm.LogsCtrl'
       return
 
   .constant 'facebookAPI',

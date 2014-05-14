@@ -30,13 +30,11 @@ body {
     overflow-x: hidden;
 
     a {
-        color: #00e;
+        color: #fff;
 
-        &:visited {
-            color: #551a8b;
-        }
-        &:hover {
-            color: #06e;
+        &:active, &:hover, &:visited {
+            color: #fff;
+            text-decoration: none;
         }
     }
 
@@ -100,8 +98,6 @@ body {
         //    @include dimen(100%, null, null, $minHeight);
         //    @include position(0, 0);
         //    @include abs;
-//        visibility: hidden;
-//        display: none;
         overflow: hidden;
         -webkit-backface-visibility: hidden;
         -webkit-transform: translate3d(0, 0, 0);
@@ -112,6 +108,11 @@ body {
         }
         .disarmBgColor {
             background-color: rgba(221, 68, 84, 0.85);
+        }
+
+        .pt-tab {
+            position: relative;
+            width: 100%;
         }
     }
     .pt-page-current, .no-js .pt-page {
@@ -127,25 +128,24 @@ body {
 /*
  * Page Wrapper
  */
+$onlineStatusBarHeight: 3px;
+$headerHeight: 60px;
+$pageIconHeight: 40px;
+$tallHeaderHeight: 100px;
+$tabHeight: 87px;
 div.pt-page {
-    $onlineStatusBarHeight: 3px;
-    $headerHeight: 60px;
-    $tallHeaderHeight: 100px;
-
     /*
      * Page Header
      */
     div.header {
         width: 100%;
         height: $headerHeight;
-        position: fixed;
         // @include dimenPos(100%, $headerHeight, fixed);
         background-color: rgba(48, 48, 48, .99);
-        margin-top: $onlineStatusBarHeight;
         z-index: 3;
 
         .row {
-            margin: 10px 2px;
+            padding: 10px 15px;
 
             .pageTitle {
                 line-height: 2em;
@@ -167,6 +167,45 @@ div.pt-page {
             }
         }
     }
+    
+    /*
+     * Page Tabs
+     */
+    .tabWrap {
+        position: relative;
+        display: none;
+
+        .arrow {
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            top: -5px;
+            left: -10px;
+            background-color: rgba(48,48,48,.99);
+            transition: left 300ms;
+            -webkit-transform: rotate(45deg);
+        }
+        .tabs {
+            display: table;
+            width: 100%;
+            height: $tabHeight + 1px; // this 1px will show a line at tab bottom when body scroll up
+            padding: 12px 0;
+            background-color: rgba(50,50,50,.2);
+            
+            .tab {
+                margin-top: 5px;
+                opacity: .2;
+
+                span {
+                    font-size: .6em;
+                }
+                &.selected {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
 
     /*
      * Page Body
@@ -174,17 +213,19 @@ div.pt-page {
     div.bodyWrap {
         position: absolute;
         width: 100%;
-        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
         top: $headerHeight;
-        padding-bottom: $headerHeight - $onlineStatusBarHeight;
+        bottom: 0;
 
         div.body {
-            margin-top: 3px;
+            margin-top: 1px;
             width: 100%;
             height: 100%;
 
             ul {
                 list-style-type: none;
+                margin: 0;
                 padding: 0;
 
                 li {
@@ -246,27 +287,37 @@ div.pt-page {
             }
         }
     }
-    &.tallHeader {
+    &.ui-tabs {
+        @media only screen and (min-height: 400px) { // only if screen higher than 400px only show tabs
+            div.tabWrap {
+                display: block;
+            }
+            div.bodyWrap {
+                top: $headerHeight + $tabHeight;
+                
+                div.body {
+                    margin-top: 2px;
+                }
+            }
+        }
+    }
+    &.ui-pageIcon {
         @media only screen and (min-height: 400px) { // only if screen higher than 400px only use taller header
             div.header {
-                height: $tallHeaderHeight;
+                height: $headerHeight + $pageIconHeight;
 
                 div.icon-title {
                     display: block !important;
                 }
             }
             div.bodyWrap {
-                top: $tallHeaderHeight;
-                padding-bottom: $tallHeaderHeight - $onlineStatusBarHeight;
+                top: $headerHeight + $pageIconHeight;
             }
         }
     }
     &.lgRow {
         div.bodyWrap {
             div.body {
-                overflow-x: hidden;
-                overflow-y: auto;
-
                 ul {
                     li {
                         @media only screen and (orientation: portrait) {
@@ -279,6 +330,13 @@ div.pt-page {
                     }
                 }
             }
+        }
+    }
+}
+div.pt-page.ui-pageIcon.ui-tabs {
+    @media only screen and (min-height: 400px) { // only if screen higher than 400px only use taller header
+        div.bodyWrap {
+            top: $headerHeight + $pageIconHeight + $tabHeight;
         }
     }
 }
@@ -323,6 +381,7 @@ $nofx: nofx 400ms ease both;
             -webkit-animation: $nofx;
         }
         .slide.ng-leave {
+            z-index: 8888;
         }
     }
 }

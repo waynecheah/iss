@@ -9,15 +9,15 @@ glApp
     template: '
 <div class="body">
   <ul>
-    <li data-page="{{gotoUrl}}" ng-repeat="item in items" class="ln">
-      <a href="{{item.href}}" class="row ln">
+    <li ng-click="goState(item.state)" ng-repeat="item in items">
+      <div class="row ln">
         <div class="col-xs-2 col-md-2"><div class="{{item.leftIco}}"></div></div>
         <div class="col-xs-6 col-md-8">
           <div translate class="name">{{item.name}}</div>
           <div translate class="description">{{item.description}}</div>
         </div>
         <div translate class="col-xs-4 col-md-2 text-right status">{{ item.status | joinArray }}</div>
-      </a>
+      </div>
     </li>
   </ul>
 </div>'

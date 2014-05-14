@@ -48,9 +48,9 @@ html.no-js
 
   body(ng-app='glApp')
 
-    // Add site or application content here
+    // Add site or application content here 
     #pt-main.container(ng-controller='AppCtrl', class='pt-perspective {{backFxClass}} {{singleFx}}')
-      .pt-page.row(ng-view, class='{{pageFxClass}}')
+      .pt-page.row(ui-view, class='{{pageFxClass}}')
 
     //[if lt IE 9]><![endif]
 
@@ -72,21 +72,24 @@ html.no-js
           li(ng-repeat='item in items', translate) {{ item | isLink }}
     
     script(type='text/ng-template', id='3_dashboard')
-      .pt-page.bgRed.tallHeader.lgRow
+      .pt-page.bgRed.ui-pageIcon.lgRow
         .header(page-head)
           icon-title
         div.bodyWrap(page-body)
       input(type='number', ng-model='zones', value='2')
       button(ng-click='updateZones()') Update
 
-    script(type='text/ng-template', id='4.1_alarm-page')
-      .pt-page.bgRed.tallHeader
+    script(type='text/ng-template', id='4_alarm-page')
+      .pt-page.bgRed.ui-pageIcon.ui-tabs
         .header(page-head)
           icon-title
-        .bodyWrap(page-body)
-
-    script(type='text/ng-template', id='4.2_alarm-page')
-      .pt-page.bgRed.tallHeader
-        .header(page-head)
-          icon-title
-        .bodyWrap(page-body)
+        div(page-tab)
+        div(ui-view, class='bodyWrap {{pageFxClass}}')
+    script(type='text/ng-template', id='4.1_zones-page')
+      div(page-body)
+    script(type='text/ng-template', id='4.2_system-page')
+      div(page-body)
+    script(type='text/ng-template', id='4.3_emergency-page')
+      div(page-body)
+    script(type='text/ng-template', id='4.4_logs-page')
+      div(page-body)
