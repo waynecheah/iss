@@ -48,7 +48,11 @@ html.no-js
 
   body(ng-app='glApp')
 
-    // Add site or application content here 
+    // Add site or application content here
+    #status-summary(connectivity)
+      internet-status(column=4)
+      cloud-status(column=4)
+      hardware-status(column=4)
     #pt-main.container(ng-controller='AppCtrl', class='pt-perspective {{backFxClass}} {{singleFx}}')
       .pt-page.row(ui-view, class='{{pageFxClass}}')
 

@@ -11,9 +11,14 @@ glApp =
     'gettext'
   ]
 
-  .run (gettextCatalog) ->
+  .run ($rootScope, $log, gettextCatalog) ->
+      $rootScope.$log                = $log
       #gettextCatalog.currentLanguage = 'zh_CN'
       gettextCatalog.debug           = true
+      return
+
+  .config ($logProvider) ->
+      $logProvider.debugEnabled yes
       return
 
   .config ($httpProvider) ->
