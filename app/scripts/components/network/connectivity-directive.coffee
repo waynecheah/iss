@@ -19,7 +19,7 @@ glApp
 # END connectivity
 
 
-.directive 'internetStatus', ($timeout) ->
+.directive 'internetStatus', ($timeout, internetStatus) ->
     restrict: 'E'
     replace: true
     require: '^connectivity'
@@ -33,8 +33,10 @@ glApp
             return
         , 3000
         $timeout ->
-            scope.iStatus = 'on'
-            connectivityCtrl.set 'internet', 'on'
+            internetStatus.check (status) ->
+                scope.iStatus = if status then 'on' else 'off'
+                connectivityCtrl.set 'internet', scope.iStatus
+                return
             return
         , 6000
         return

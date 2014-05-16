@@ -65,6 +65,15 @@ body {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+@mixin animation ($name, $duration:null, $easing:null, $fillMode:null, $delay:null, $count:null, $direction:null) {
+    -webkit-animation: $name $duration $easing $fillMode $delay $count $direction;
+}
+@mixin changeBgColor ($classname, $from, $to) {
+    @-webkit-keyframes #{$classname} {
+        from { background: $from; }
+        to { background: $to; }
+    }
+}
 @mixin line ($height:5px, $marginBottom:0) {
     width: 25px;
     height: $height;
@@ -82,23 +91,36 @@ body {
 /*
  * Network connectivity
  */
+$on: #3DB094;
+$off: #d74352;
+$dis: gray;
+$summarySttHeight: 3px;
+@include changeBgColor(onlineHandler, #ccc, $on);
+@include changeBgColor(offlineHandler, #ccc, $off);
+@include changeBgColor(disabledHandler, #ccc, $dis);
 #status-summary {
     width: 100%;
-    height: 3px;
+    height: $summarySttHeight;
     position: fixed;
     z-index: 1000;
     background-color: gray;
 
     .row {
         div {
-            height: 3px;
+            height: $summarySttHeight;
         }
 
         .on {
-            background-color: #3DB094;
+            @include animation(onlineHandler, 800ms, null, null, 800ms, 5);
+            background-color: $on;
         }
         .off {
-            background-color: #d74352;
+            @include animation(offlineHandler, 800ms, null, null, 800ms, 5);
+            background-color: $off;
+        }
+        .dis {
+            @include animation(disabledHandler, 800ms, null, null, 800ms, 5);
+            background-color: $dis;
         }
     }
 }
