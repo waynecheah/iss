@@ -12,7 +12,6 @@
   ],
   "homepage": "innerzon.com",
   "dependencies": {
-    "es5-shim": "~3.1.1",
     "json3": "~3.3.1",
     "angular": "~1.2.16",
     "angular-animate": "~1.2.16",
@@ -23,7 +22,9 @@
     "angular-sanitize": "~1.2.16",
     "angular-touch": "~1.2.16",
     "angular-ui-router": "~0.2.10",
-    "bootstrap": "~3.1.1"
+    "bootstrap": "~3.1.1",
+    "es5-shim": "3.3.0",
+    "socket.io-client": "~0.9.16"
   },
   "overrides": {
     "es5-shim": {
@@ -31,6 +32,9 @@
     },
     "json3": {
       "ignore": true
+    },
+    "socket.io-client": {
+      "main": "./dist/socket.io.js"
     }
   },
   "main": "app/scripts/main.coffee",

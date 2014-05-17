@@ -4,41 +4,26 @@ glApp
 
 .directive 'connectivity', ->
     transclude: yes
-    controller: ($rootScope) ->
+    controller: ->
         this.internet = 'dis'
         this.cloud    = 'dis'
         this.hardware = 'dis'
-
-        this.set = (name, status) ->
-            this[name] = status
-            $rootScope.$broadcast "#{name}:changed", status
-            return
         return
     template: '
 <div ng-transclude class="short row"></div>'
 # END connectivity
 
 
-.directive 'internetStatus', ($timeout, internetStatus) ->
+.directive 'internetStatus', ($rootScope, $timeout, internetStatus) ->
     restrict: 'E'
     replace: true
     require: '^connectivity'
     link: (scope, elem, attrs, connectivityCtrl) ->
-        scope.iStatus = 'on'
-        connectivityCtrl.internet = scope.iStatus
+        $rootScope.$on 'internet:changed', (e, status) ->
+            scope.iStatus = connectivityCtrl.internet = status
+            return
 
-        $timeout ->
-            scope.iStatus = 'off'
-            connectivityCtrl.set 'internet', 'off'
-            return
-        , 3000
-        $timeout ->
-            internetStatus.check (status) ->
-                scope.iStatus = if status then 'on' else 'off'
-                connectivityCtrl.set 'internet', scope.iStatus
-                return
-            return
-        , 6000
+        internetStatus.check()
         return
     scope:
         column: '@'
@@ -46,27 +31,41 @@ glApp
 <div class="col-xs-{{column}} internet text-center {{iStatus}}"></div>'
 # END internetStatus
 
-.directive 'cloudStatus', ($log) ->
+.directive 'cloudStatus', ($rootScope, $log, socket, internetStatus) ->
     restrict: 'E'
     replace: true
     require: '^connectivity'
     link: (scope, elem, attrs, connectivityCtrl) ->
-        $log.debug 'Cloud find internet status', connectivityCtrl.internet
-
+        $rootScope.$on 'socket:changed', (e, status, eventName) ->
+            if status is 'off'
+                # if internet is off, cloud status will be turned to disabled
+                cloudStatus = if connectivityCtrl.internet is 'off' then 'dis' else 'off'
+                connectivityCtrl.cloud = cloudStatus
+                scope.$apply ->
+                    scope.cStatus = cloudStatus
+                # Check internet connection and see if it caused cloud disconnected
+                internetStatus.check() if eventName is 'connect_failed' or eventName is 'disconnect'
+            else if status is 'on'
+                console.warn 'what is the status now?', status
+                connectivityCtrl.cloud = 'on'
+                scope.$apply ->
+                    scope.cStatus = 'on'
+            return
         scope.$on 'internet:changed', (obj, status) ->
             $log.debug 'Cloud found Internet status has changed:', status
-            unless status is 'on'
-                $log.warn 'Cloud status is now disabled'
-                scope.cStatus = 'dis'
-                connectivityCtrl.set 'cloud', 'dis'
+            if status is 'on'
+                # when internet resume, socket may need to establish connection to cloud
+                socket.connect()
             else
-                scope.cStatus = 'on'
-                connectivityCtrl.set 'cloud', 'on'
+                cloudStatus = socket.status()
+                return if cloudStatus is 'on'
+                # internet and cloud also not available, make cloud disabled
+                $log.warn 'Cloud status is now disabled'
+                connectivityCtrl.cloud = 'dis'
+                scope.$apply ->
+                    scope.cStatus = 'dis'
             return
 
-        # can only check cloud status if there is internet connection
-        return scope.cStatus = 'dis' unless connectivityCtrl.internet is 'on'
-        scope.cStatus = 'off'
         return
     scope:
         column: '@'
@@ -74,27 +73,40 @@ glApp
 <div class="col-xs-{{column}} cloud text-center {{cStatus}}"></div>'
 # END cloudStatus
 
-.directive 'hardwareStatus', ($log) ->
+.directive 'hardwareStatus', ($rootScope, $log, socket) ->
     restrict: 'E'
     replace: true
     require: '^connectivity'
     link: (scope, elem, attrs, connectivityCtrl) ->
-        $log.debug 'Hardware find cloud status', connectivityCtrl.cloud
-
-        scope.$on 'cloud:changed', (obj, status) ->
-            $log.debug 'Hardware found Cloud status has changed:', status
-            unless status is 'on'
-                $log.warn 'Hardware status is now disabled'
-                scope.hStatus = 'dis'
-                connectivityCtrl.set 'hardware', 'dis'
+        socket.on 'hardware:changed', (status, data) ->
+            if status is 'on'
+                $log.debug "Device serial [#{data.serial}] is report connected to server"
+                connectivityCtrl.hardware = 'on'
+                scope.$apply ->
+                    scope.hStatus = 'on'
             else
-                scope.hStatus = 'off'
-                connectivityCtrl.set 'hardware', 'off'
+                $log.warn "Device serial [#{data.serial}] is report disconnected from server"
+                hardwareStatus = if socket.status() is 'on' then 'off' else 'dis'
+                connectivityCtrl.hardware = hardwareStatus
+                scope.$apply ->
+                    scope.hStatus = hardwareStatus
+            return
+        $rootScope.$on 'socket:changed', (e, status) ->
+            $log.debug 'Hardware found Cloud status has changed:', status
+            if status is 'on'
+                connectivityCtrl.hardware = 'off'
+                scope.$apply ->
+                    scope.hStatus = 'off'
+            else
+                $log.warn 'Hardware status is now disabled'
+                connectivityCtrl.hardware = 'dis'
+                scope.$apply ->
+                    scope.hStatus = 'dis'
             return
 
-        # can only check hardware status if there is cloud service available
+        $log.debug 'Hardware find cloud status', connectivityCtrl.cloud
         return scope.hStatus = 'dis' unless connectivityCtrl.cloud is 'on'
-        scope.hStatus = 'off'
+        scope.hStatus = connectivityCtrl.hardware = 'off'
         return
     scope:
         column: '@'
