@@ -21,6 +21,10 @@ glApp
     link: (scope, elem, attrs, connectivityCtrl) ->
         $rootScope.$on 'internet:changed', (e, status) ->
             scope.iStatus = connectivityCtrl.internet = status
+            unless $rootScope.$$phase
+                scope.$apply ->
+                    scope.iStatus = status
+                    return
             return
 
         internetStatus.check()
@@ -36,22 +40,25 @@ glApp
     replace: true
     require: '^connectivity'
     link: (scope, elem, attrs, connectivityCtrl) ->
+        updateStatus = (status) ->
+            connectivityCtrl.cloud = status
+            scope.$apply ->
+                scope.cStatus = status
+                return
+            return
+        # END updateStatus
+
         $rootScope.$on 'socket:changed', (e, status, eventName) ->
             if status is 'off'
                 # if internet is off, cloud status will be turned to disabled
                 cloudStatus = if connectivityCtrl.internet is 'off' then 'dis' else 'off'
-                connectivityCtrl.cloud = cloudStatus
-                scope.$apply ->
-                    scope.cStatus = cloudStatus
+                updateStatus cloudStatus
                 # Check internet connection and see if it caused cloud disconnected
                 internetStatus.check() if eventName is 'connect_failed' or eventName is 'disconnect'
             else if status is 'on'
-                console.warn 'what is the status now?', status
-                connectivityCtrl.cloud = 'on'
-                scope.$apply ->
-                    scope.cStatus = 'on'
+                updateStatus 'on'
             return
-        scope.$on 'internet:changed', (obj, status) ->
+        $rootScope.$on 'internet:changed', (obj, status) ->
             $log.debug 'Cloud found Internet status has changed:', status
             if status is 'on'
                 # when internet resume, socket may need to establish connection to cloud
@@ -61,9 +68,7 @@ glApp
                 return if cloudStatus is 'on'
                 # internet and cloud also not available, make cloud disabled
                 $log.warn 'Cloud status is now disabled'
-                connectivityCtrl.cloud = 'dis'
-                scope.$apply ->
-                    scope.cStatus = 'dis'
+                updateStatus 'dis'
             return
 
         return
@@ -78,30 +83,30 @@ glApp
     replace: true
     require: '^connectivity'
     link: (scope, elem, attrs, connectivityCtrl) ->
+        updateStatus = (status) ->
+            connectivityCtrl.hardware = status
+            scope.$apply ->
+                scope.hStatus = status
+                return
+            return
+        # END updateStatus
+
         socket.on 'hardware:changed', (status, data) ->
             if status is 'on'
                 $log.debug "Device serial [#{data.serial}] is report connected to server"
-                connectivityCtrl.hardware = 'on'
-                scope.$apply ->
-                    scope.hStatus = 'on'
+                updateStatus 'on'
             else
                 $log.warn "Device serial [#{data.serial}] is report disconnected from server"
                 hardwareStatus = if socket.status() is 'on' then 'off' else 'dis'
-                connectivityCtrl.hardware = hardwareStatus
-                scope.$apply ->
-                    scope.hStatus = hardwareStatus
+                updateStatus hardwareStatus
             return
         $rootScope.$on 'socket:changed', (e, status) ->
             $log.debug 'Hardware found Cloud status has changed:', status
             if status is 'on'
-                connectivityCtrl.hardware = 'off'
-                scope.$apply ->
-                    scope.hStatus = 'off'
+                updateStatus 'off'
             else
                 $log.warn 'Hardware status is now disabled'
-                connectivityCtrl.hardware = 'dis'
-                scope.$apply ->
-                    scope.hStatus = 'dis'
+                updateStatus 'dis'
             return
 
         $log.debug 'Hardware find cloud status', connectivityCtrl.cloud

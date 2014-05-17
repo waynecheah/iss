@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'glApp'
+glApp
 
 .factory 'internetStatus', ($rootScope, $http, $log) ->
     attempt   = 0

@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module 'glApp'
+glApp
 
 .factory 'socket', ($rootScope, $timeout, $log) ->
     socket  = null
