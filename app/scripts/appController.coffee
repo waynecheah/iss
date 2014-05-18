@@ -19,6 +19,9 @@ glApp
         false
     # END isSingleFx
 
+    $rootScope.alarmStatus = 'disarmed'
+    $scope.toolbar = if $rootScope.alarmStatus is 'disabled' then off else on
+
     $rootScope.pageFx = (ctrl, fx='slide') ->
         console.log 'goto controller:', ctrl, fx
         if oneFxCtrl
@@ -72,6 +75,7 @@ glApp
         return
 
     return
+
 
 .controller 'MenuCtrl', ($scope, $rootScope) ->
     $scope.pageFxClass = $rootScope.pageFx 'MenuCtrl', 'one-slide'
@@ -163,6 +167,19 @@ glApp
         state: 'alarm.logs'
         active: false
     ]
+    $scope.swipe = (x) ->
+        curState = $state.current.name
+        index    = ''
+
+        angular.forEach $scope.tabs, (tab, i) ->
+            if tab.state is curState
+                index = if x is 1 then i+1 else i-1
+            return
+
+        if index > -1 and index < $scope.tabs.length
+            console.warn $scope.tabs[index].state
+            $state.go $scope.tabs[index].state, {}, location:'replace'
+        return
     $scope.goState = (state) ->
         $state.go state, {}, location:'replace'
         return

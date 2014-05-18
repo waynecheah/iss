@@ -54,7 +54,9 @@ html.no-js
         internet-status(column=4)
         cloud-status(column=4)
         hardware-status(column=4)
-      .pt-page.row(ui-view, class='{{pageFxClass}}')
+      .pt-page.row(ui-view, ng-class='{ uiAlarmToolbar:toolbar, blurPage:showKeypad }', class='{{pageFxClass}}')
+      .row
+        alarm-toolbar.alarmToolbar.col-xs-12(ng-show='toolbar', ng-class='alarmStatus')
 
     //[if lt IE 9]><![endif]
 
@@ -76,7 +78,7 @@ html.no-js
           li(ng-repeat='item in items', translate) {{ item | isLink }}
     
     script(type='text/ng-template', id='3_dashboard')
-      .pt-page.bgRed.ui-pageIcon.lgRow
+      .pt-page.ui-pageIcon.lgRow(ng-class='alarmStatus')
         .header(page-head)
           icon-title
         div.bodyWrap(page-body)
@@ -84,11 +86,11 @@ html.no-js
       button(ng-click='updateZones()') Update
 
     script(type='text/ng-template', id='4_alarm-page')
-      .pt-page.bgRed.ui-pageIcon.ui-tabs
+      .pt-page.ui-pageIcon.ui-tabs(ng-class='alarmStatus')
         .header(page-head)
           icon-title
         div(page-tab)
-        div(ui-view, class='bodyWrap {{pageFxClass}}')
+        div(ui-view, class='bodyWrap {{pageFxClass}}', ng-swipe-left='swipe(1)', ng-swipe-right='swipe(2)')
     script(type='text/ng-template', id='4.1_zones-page')
       div(page-body)
     script(type='text/ng-template', id='4.2_system-page')
