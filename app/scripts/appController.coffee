@@ -22,6 +22,11 @@ glApp
     $rootScope.alarmStatus = 'disarmed'
     $scope.toolbar = if $rootScope.alarmStatus is 'disabled' then off else on
 
+    $scope.swipeDown = ->
+        console.warn 'swip down from header detected'
+        $rootScope.$broadcast 'swipe:header', 'down'
+        return
+
     $rootScope.pageFx = (ctrl, fx='slide') ->
         console.log 'goto controller:', ctrl, fx
         if oneFxCtrl
@@ -177,7 +182,6 @@ glApp
             return
 
         if index > -1 and index < $scope.tabs.length
-            console.warn $scope.tabs[index].state
             $state.go $scope.tabs[index].state, {}, location:'replace'
         return
     $scope.goState = (state) ->
@@ -226,7 +230,6 @@ glApp
             return
 
         window.lastState = toState.name #unless fromState.url is '/wave'
-        console.log 'THERE', window.lastState
         return
     return
 .controller 'Alarm.ZonesCtrl', ($scope) ->

@@ -13,6 +13,19 @@ glApp
 <div ng-transclude class="short row"></div>'
 # END connectivity
 
+.directive 'notification', ($rootScope) ->
+    restrict: 'E'
+    replace: yes
+    transclude: yes
+    controller: ($scope) ->
+        $rootScope.$on 'swipe:header', (e, direction) ->
+            $scope.notification = if direction is 'down' then yes else no
+            return
+        return
+    template: '
+<div ng-transclude class="row" ng-show="notification"></div>'
+# END connectivity
+
 
 .directive 'internetStatus', ($rootScope, $timeout, internetStatus) ->
     restrict: 'E'
@@ -32,7 +45,14 @@ glApp
     scope:
         column: '@'
     template: '
-<div class="col-xs-{{column}} internet text-center {{iStatus}}"></div>'
+<div class="col-xs-{{column}} wrapper internet text-center {{iStatus}}">
+  <div class="internet visual {{iStatus}}">
+    <div class="text" translate>LINE</div>
+    <div class="status">
+      <div class="ico"><span class="icon-Earth"></span></div>
+    </div>
+  </div>
+</div>'
 # END internetStatus
 
 .directive 'cloudStatus', ($rootScope, $log, socket, internetStatus) ->
@@ -75,7 +95,14 @@ glApp
     scope:
         column: '@'
     template: '
-<div class="col-xs-{{column}} cloud text-center {{cStatus}}"></div>'
+<div class="col-xs-{{column}} wrapper cloud text-center {{cStatus}}">
+  <div class="cloud visual {{cStatus}}">
+    <div class="text" translate>CLOUD</div>
+    <div class="status">
+      <div class="ico"><span class="icon-CloudSync"></span></div>
+    </div>
+  </div>
+</div>'
 # END cloudStatus
 
 .directive 'hardwareStatus', ($rootScope, $log, socket) ->
@@ -116,5 +143,12 @@ glApp
     scope:
         column: '@'
     template: '
-<div class="col-xs-{{column}} hardware text-center {{hStatus}}"></div>'
+<div class="col-xs-{{column}} wrapper hardware text-center {{hStatus}}">
+  <div class="hardware visual {{cStatus}}">
+    <div class="text" translate>PANEL</div>
+    <div class="status">
+      <div class="ico"><span class="icon-ServerSync"></span></div>
+    </div>
+  </div>
+</div>'
 # END hardwareStatus

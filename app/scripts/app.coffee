@@ -7,7 +7,7 @@ glApp =
     'ngResource'
     'ngSanitize'
     'ui.router'#'ngRoute'
-    'ngTouch'
+    'angular-gestures'
     'gettext'
   ]
 
@@ -15,6 +15,7 @@ glApp =
       $rootScope.$log                = $log
       #gettextCatalog.currentLanguage = 'zh_CN'
       gettextCatalog.debug           = true
+      #FastClick.attach document.body # seem to be slower after add?
       return
 
   .config ($logProvider) ->
