@@ -13,19 +13,6 @@ glApp
 <div ng-transclude class="short row"></div>'
 # END connectivity
 
-.directive 'notification', ($rootScope) ->
-    restrict: 'E'
-    replace: yes
-    transclude: yes
-    controller: ($scope) ->
-        $rootScope.$on 'swipe:header', (e, direction) ->
-            $scope.notification = if direction is 'down' then yes else no
-            return
-        return
-    template: '
-<div ng-transclude class="row" ng-show="notification"></div>'
-# END connectivity
-
 
 .directive 'internetStatus', ($rootScope, $timeout, internetStatus) ->
     restrict: 'E'
@@ -62,9 +49,10 @@ glApp
     link: (scope, elem, attrs, connectivityCtrl) ->
         updateStatus = (status) ->
             connectivityCtrl.cloud = status
-            scope.$apply ->
-                scope.cStatus = status
-                return
+            unless scope.$$phase
+                scope.$apply ->
+                    scope.cStatus = status
+                    return
             return
         # END updateStatus
 

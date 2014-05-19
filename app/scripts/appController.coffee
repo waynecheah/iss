@@ -26,6 +26,10 @@ glApp
         console.warn 'swip down from header detected'
         $rootScope.$broadcast 'swipe:header', 'down'
         return
+    $scope.swipeUp = ->
+        console.warn 'swip up from notification detected'
+        $rootScope.$broadcast 'swipe:notification', 'up'
+        return
 
     $rootScope.pageFx = (ctrl, fx='slide') ->
         console.log 'goto controller:', ctrl, fx
