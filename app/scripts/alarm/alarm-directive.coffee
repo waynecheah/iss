@@ -35,7 +35,7 @@ glApp
             $timeout ->
                 $scope.onPasscode = yes
                 $element.css 'top', 0
-                $timeout
+                return
             , 50
 
             if $rootScope.alarmStatus is 'disarmed'
@@ -103,8 +103,8 @@ glApp
     <div class="description">{{description}}</div>
   </div>
   <div class="col-xs-3 rightCol">
-    <div class="armButton" ng-hide="keypad" ng-click="armDisarm()">{{buttonTxt}}</div>
-    <div class="armIcon closeKeypad icon-False" ng-show="onKeypad" ng-click="closeKeypad()"></div>
+    <div class="armButton" ng-hide="keypad" hm-tap="armDisarm()">{{buttonTxt}}</div>
+    <div class="armIcon closeKeypad icon-False" ng-show="onKeypad" hm-tap="closeKeypad()"></div>
     <div class="armIcon loading icon-Refresh" ng-show="onProgress"></div>
   </div>
 </div>
@@ -122,22 +122,22 @@ glApp
   </div>
   <div class="row keypad">
     <div class="col col-xs-4">
-      <div class="passcodeButton" ng-class="{onTap:onTap.k1}" ng-click="keyPress(1)">1</div>
-      <div class="passcodeButton" ng-class="{onTap:onTap.k4}" ng-click="keyPress(4)">4</div>
-      <div class="passcodeButton" ng-class="{onTap:onTap.k7}" ng-click="keyPress(7)">7</div>
-      <div class="cancel" ng-click="cancel()">{{cancelTxt}}</div>
+      <div class="passcodeButton" ng-class="{onTap:onTap.k1}" hm-tap="keyPress(1)">1</div>
+      <div class="passcodeButton" ng-class="{onTap:onTap.k4}" hm-tap="keyPress(4)">4</div>
+      <div class="passcodeButton" ng-class="{onTap:onTap.k7}" hm-tap="keyPress(7)">7</div>
+      <div class="cancel" hm-tap="cancel()">{{cancelTxt}}</div>
     </div>
     <div class="col col-xs-4">
-      <div class="passcodeButton" ng-class="{onTap:onTap.k2}" ng-click="keyPress(2)">2</div>
-      <div class="passcodeButton" ng-class="{onTap:onTap.k5}" ng-click="keyPress(5)">5</div>
-      <div class="passcodeButton" ng-class="{onTap:onTap.k8}" ng-click="keyPress(8)">8</div>
-      <div class="passcodeButton" ng-class="{onTap:onTap.k0}" ng-click="keyPress(0)">0</div>
+      <div class="passcodeButton" ng-class="{onTap:onTap.k2}" hm-tap="keyPress(2)">2</div>
+      <div class="passcodeButton" ng-class="{onTap:onTap.k5}" hm-tap="keyPress(5)">5</div>
+      <div class="passcodeButton" ng-class="{onTap:onTap.k8}" hm-tap="keyPress(8)">8</div>
+      <div class="passcodeButton" ng-class="{onTap:onTap.k0}" hm-tap="keyPress(0)">0</div>
     </div>
     <div class="col col-xs-4">
-      <div class="passcodeButton" ng-class="{onTap:onTap.k3}" ng-click="keyPress(3)">3</div>
-      <div class="passcodeButton" ng-class="{onTap:onTap.k6}" ng-click="keyPress(6)">6</div>
-      <div class="passcodeButton" ng-class="{onTap:onTap.k9}" ng-click="keyPress(9)">9</div>
-      <div class="ok" ng-show="showOk" ng-click="submit()">Ok</div>
+      <div class="passcodeButton" ng-class="{onTap:onTap.k3}" hm-tap="keyPress(3)">3</div>
+      <div class="passcodeButton" ng-class="{onTap:onTap.k6}" hm-tap="keyPress(6)">6</div>
+      <div class="passcodeButton" ng-class="{onTap:onTap.k9}" hm-tap="keyPress(9)">9</div>
+      <div class="ok" ng-show="showOk" hm-tap="submit()">Ok</div>
     </div>
   </div>
 </div>'

@@ -446,7 +446,9 @@ div.pt-page {
         }
     }
     &.blurPage {
-        -webkit-filter: blur(5px);
+        .mainmenu .logo, .mainmenu .mainmenu, .header, .tabWrap, .bodyWrap .body {
+            -webkit-filter: blur(10px);
+        }
     }
 }
 div.pt-page.ui-pageIcon.ui-tabs {
@@ -625,14 +627,17 @@ $buttonBorder: 2px;
     //z-index: 9999;
 }
 
-$nofx: nofx 400ms ease both;
+$duration: 300ms;
+$easing: linear;
+$delay: 0;
+$nofx: nofx $duration $easing both;
 
 .slide.ng-leave, .one-slide.ng-leave {
-    -webkit-animation: moveToLeft 400ms cubic-bezier(0.230, 0.635, 0.355, 1.000) both;
+    -webkit-animation: moveToLeft $duration $easing both;
     z-index: 9999;
 }
 .slide.ng-enter, .one-slide.ng-enter {
-    -webkit-animation: moveFromRight 400ms cubic-bezier(0.230, 0.635, 0.355, 1.000) both;
+    -webkit-animation: moveFromRight $duration $easing both $delay;
 }
 .singleFx { // this mean no fx apply to the page
     .slide.ng-leave, .slide.ng-enter {
@@ -641,11 +646,11 @@ $nofx: nofx 400ms ease both;
 }
 .back {
     .slide.ng-leave, .one-slide.ng-leave {
-        -webkit-animation: moveToRight 400ms cubic-bezier(0.230, 0.635, 0.355, 1.000) both;
+        -webkit-animation: moveToRight $duration $easing both;
         z-index: 9999;
     }
     .slide.ng-enter, .one-slide.ng-enter {
-        -webkit-animation: moveFromLeft 400ms cubic-bezier(0.230, 0.635, 0.355, 1.000) both;
+        -webkit-animation: moveFromLeft $duration $easing both $delay;
     }
     .one-slide.ng-leave, .one-slide.ng-enter {
         z-index: 9999;

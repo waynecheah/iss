@@ -6,7 +6,7 @@ html.no-js
     meta(name='description', content='Integrated Security Solutions')
     meta(name='HandheldFriendly', content='True')
     meta(name='MobileOptimized', content='320')
-    meta(name='viewport', content='width=device-width, initial-scale=1, minimal-ui')
+    meta(name='viewport', content='width=device-width, user-scalable=no, initial-scale=1, minimal-ui')
     meta(http-equiv='cleartype', content='on')
     // build:css styles/vendor.css 
     // bower:css 
@@ -54,7 +54,7 @@ html.no-js
         internet-status(column=4)
         cloud-status(column=4)
         hardware-status(column=4)
-      notification.fullpage(hm-swipe-up='swipeUp()')
+      notification.fullpage(hm-drag-up='swipeUp()')
         div.connectivity(connectivity)
           internet-status(column=4)
           cloud-status(column=4)
@@ -77,14 +77,14 @@ html.no-js
 
     script(type='text/ng-template', id='2_menu-page.s')
       .pt-page.mainmenu
-        .text-center(style='margin:50px 0 20px;')
+        .logo.text-center(style='margin:50px 0 20px;')
           span.icon-IZCircle(style='font-size:56px;')
         ul.mainmenu
-          li(ng-repeat='item in items', translate) {{ item | isLink }}
+          li(hm-tap="goState(item.state)" ng-repeat='item in items', translate) {{ item | isLink }}
     
     script(type='text/ng-template', id='3_dashboard')
       .pt-page.ui-pageIcon.lgRow(ng-class='alarmStatus')
-        .header(page-head, hm-swipe-down='swipeDown()')
+        .header(page-head, hm-drag-down='swipeDown()')
           icon-title
         div.bodyWrap(page-body)
       input(type='number', ng-model='zones', value='2')
@@ -92,7 +92,7 @@ html.no-js
 
     script(type='text/ng-template', id='4_alarm-page')
       .pt-page.ui-pageIcon.ui-tabs(ng-class='alarmStatus')
-        .header(page-head, hm-swipe-down='swipeDown()')
+        .header(page-head, hm-drag-down='swipeDown()')
           icon-title
         div(page-tab)
         div(ui-view, class='bodyWrap {{pageFxClass}}', hm-swipe-left='swipe(1)', hm-swipe-right='swipe(2)')

@@ -74,7 +74,7 @@ glApp
                 $timeout ->
                     $scope.backFxClass = ''
                     return
-                , 500
+                , 800
             if prevRoute is curr_url
                 history.pop()
                 console.info 'history list: ', history

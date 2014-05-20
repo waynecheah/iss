@@ -4,18 +4,9 @@ glApp
 
 .directive 'pageHead', ->
     transclude: yes
-#    controller: ($scope, $window) ->
-#        $scope.onLeftIcon = ->
-#            $window.history.back()
-#            return
-#        return
-#    scope:
-#        leftIco: '@'
-#        title: '@'
-#        rightIco: '@'
     template: '
 <div class="row">
-  <div class="col-xs-2 col-md-1" ng-click="onLeftIcon()">
+  <div class="col-xs-2 col-md-1" hm-tap="onLeftIcon()">
     <span class="{{leftIco}}"></span>
   </div>
   <div class="col-xs-8 col-md-10 pageTitle text-center">
@@ -29,8 +20,6 @@ glApp
 
 .directive 'iconTitle', ->
     restrict: 'E'
-#    scope:
-#        icon: '@'
     template: '
 <div class="iconWrapper">
   <div class="icon {{icon}}"></div>
