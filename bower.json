@@ -19,7 +19,6 @@
     "angular-gestures": "~0.2.2",
     "angular-gettext": "~0.2.8",
     "angular-resource": "~1.2.16",
-    "angular-route": "~1.2.16",
     "angular-sanitize": "~1.2.16",
     "angular-ui-router": "~0.2.10",
     "bootstrap": "~3.1.1",
@@ -31,7 +30,19 @@
     "es5-shim": {
       "ignore": true
     },
+    "bootstrap": {
+      "main": [
+        "./dist/css/bootstrap.css",
+        "./dist/fonts/glyphicons-halflings-regular.eot",
+        "./dist/fonts/glyphicons-halflings-regular.svg",
+        "./dist/fonts/glyphicons-halflings-regular.ttf",
+        "./dist/fonts/glyphicons-halflings-regular.woff"
+      ]
+    },
     "json3": {
+      "ignore": true
+    },
+    "jquery": {
       "ignore": true
     },
     "socket.io-client": {
