@@ -62,6 +62,20 @@ glApp =
               controller: 'Alarm.LogsCtrl'
       return
 
+  .animation '.slide', ($rootScope) ->
+      enter: (el, done) ->
+          #console.warn 'ENTER START: ', $rootScope.backFxClass
+          el.one 'animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', ->
+              $rootScope.backFxClass = ''
+          , false
+          done()
+  .animation '.one-slide', ($rootScope) ->
+      enter: (el, done) ->
+          el.one 'animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', ->
+              $rootScope.backFxClass = ''
+          , false
+          done()
+
   .constant 'facebookAPI',
       appId: '553789621375577'
       status: true

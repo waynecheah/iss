@@ -70,11 +70,11 @@ glApp
 
             if current_id < previous_id
                 console.warn 'Current index is smaller! Page uses reverse fx'
-                $scope.backFxClass = 'back'
-                $timeout ->
-                    $scope.backFxClass = ''
-                    return
-                , 800
+                $rootScope.backFxClass = 'back'
+#                $timeout ->
+#                    $scope.backFxClass = ''
+#                    return
+#                , 800
             if prevRoute is curr_url
                 history.pop()
                 console.info 'history list: ', history
