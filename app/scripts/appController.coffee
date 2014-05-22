@@ -20,7 +20,7 @@ glApp
     # END isSingleFx
 
     $rootScope.alarmStatus = 'disarmed'
-    $scope.toolbar = if $rootScope.alarmStatus is 'disabled' then off else on
+    $rootScope.toolbar     = if $rootScope.alarmStatus is 'disabled' then off else on
 
     $scope.swipeDown = ->
         console.warn 'swip down from header detected'
@@ -85,6 +85,10 @@ glApp
 
     return
 
+
+.controller 'LoginCtrl', ($scope, $rootScope) ->
+    $rootScope.toolbar = no
+    return
 
 .controller 'MenuCtrl', ($scope, $rootScope) ->
     $scope.pageFxClass = $rootScope.pageFx 'MenuCtrl', 'one-slide'

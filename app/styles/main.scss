@@ -215,6 +215,12 @@ $pageOffset: 70px; // 70px for transition bounce down more
             position: relative;
             width: 100%;
         }
+        &.bg {
+            background: transparent center top no-repeat;
+            background-size: cover;
+            background-image: url(http://ppcdn.500px.org/71209573/18609455467a7f22c76b0c89f041b7ade2165073/2048.jpg);
+            -webkit-filter: blur(2px);
+        }
     }
     .pt-page-current, .no-js .pt-page {
         visibility: visible;
@@ -223,6 +229,56 @@ $pageOffset: 70px; // 70px for transition bounce down more
     }
     .pt-page-ontop {
         z-index: 999;
+    }
+}
+
+/*
+ * Login Page
+ */
+.pt-page {
+    $height: 45px;
+
+    div.authOptions {
+        opacity: 0;
+        -webkit-transition: -webkit-filter 2s, opacity 1s;
+
+        div.withServices {
+            margin-top: 20px;
+
+            .inputWrap {
+                .icon {
+                    font-size: 10px;
+                    line-height: 23px;
+                }
+                .input {
+                    line-height: $height;
+                    text-align: left;
+
+                    .text {
+                        @media only screen and (min-width: 160px) {
+                            padding-left: 8px;
+                        }
+                        @media only screen and (min-width: 320px) {
+                            padding-left: 15px;
+                        }
+                    }
+                }
+            }
+            .facebook {
+                background-color: rgba(60, 90, 152, .8);
+
+                .icon-facebook {
+                    background-color: #3c5a98;
+                }
+            }
+            .google {
+                background-color: rgba(221, 75, 57, .8);
+
+                .icon-gplus {
+                    background-color: #dd4b39;
+                }
+            }
+        }
     }
 }
 

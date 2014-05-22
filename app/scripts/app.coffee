@@ -30,6 +30,10 @@ glApp =
   .config ($stateProvider, $urlRouterProvider) ->
       $urlRouterProvider.otherwise '/'
       $stateProvider
+          .state 'login',
+              url: '/signin',
+              templateUrl: '1_login-page'
+              controller: 'LoginCtrl'
           .state 'mainmenu',
               url: '/'
               templateUrl: '2_menu-page.s'

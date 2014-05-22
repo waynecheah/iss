@@ -75,6 +75,16 @@ html.no-js
     // endinject 
     // endbuild 
 
+    script(type='text/ng-template', id='1_login-page')
+      .pt-page.bg
+        .authOptions
+          .withServices
+            .inputWrap.facebook
+              .icon.icon-facebook
+              .input
+              .txt
+                | Sign in with
+                b facebook
     script(type='text/ng-template', id='2_menu-page.s')
       .pt-page.mainmenu
         .logo.text-center(style='margin:50px 0 20px;')
@@ -95,7 +105,7 @@ html.no-js
         .header(page-head, hm-drag-down='swipeDown()')
           icon-title
         div(page-tab)
-        div(ui-view, class='bodyWrap {{pageFxClass}}', hm-swipe-left='swipe(1)', hm-swipe-right='swipe(2)')
+        div(ui-view, class='bodyWrap {{pageFxClass}}', hm-drag-left='swipe(1)', hm-drag-right='swipe(2)')
     script(type='text/ng-template', id='4.1_zones-page')
       div(page-body)
     script(type='text/ng-template', id='4.2_system-page')
