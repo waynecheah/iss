@@ -209,8 +209,9 @@ $pageOffset: 70px; // 70px for transition bounce down more
             @include dimenPos();
             background: transparent center top no-repeat;
             background-size: cover;
-            background-image: url(http://ppcdn.500px.org/71209573/18609455467a7f22c76b0c89f041b7ade2165073/2048.jpg);
-            -webkit-filter: blur(2px);
+            background-image: url(../images/bg.jpg);
+            opacity: .6;
+            -webkit-filter: blur(8px);
         }
     }
     .pt-page-current, .no-js .pt-page {
@@ -229,13 +230,204 @@ $pageOffset: 70px; // 70px for transition bounce down more
 .pt-page {
     $height: 45px;
 
+    .loginPage {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin-left: 0;
+        margin-right: 0;
+
+
+        .logo, .services {
+            position: relative;
+            height: auto;
+            width: 100%;
+
+            .wrapper {
+                margin: auto;
+            }
+        }
+        .logo {
+            left: 0;
+
+            .wrapper {
+                margin-top: 30px;
+                width: 280px;
+                height: 100px;
+            }
+            margin-left: 0; padding:0; // remove when old code delete
+        }
+        .services {
+            right: 0;
+
+            .wrapper {
+                width: 320px;
+                height: 313px;
+
+                .authOptions div.input {
+                    width: 230px;
+                    margin: 0 auto;
+
+                    input {
+                        @include dimenBox(230px, null, 0 auto 20px, null, 0);
+                        background-color: transparent;
+                        border-bottom: 1px solid rgba(255, 255, 255, .75);
+                        color: #fff;
+                    }
+                    ::-webkit-input-placeholder {
+                        color: rgba(255, 255, 255, .6);
+                    }
+                }
+            }
+        }
+
+        div.footer {
+            @include position(null, null, 20px, 20px);
+            position: fixed;
+
+            .text {
+                display: inline;
+                font-size: 11px;
+            }
+            .button {
+                @include font(13px, #fff, 15px, bold);
+                @include boxModel(null, 5px 0, null, 5px);
+                padding: 5px 10px;
+                display: inline;
+                text-align: center;
+                background-color: rgba(255, 255, 255, .3);
+            }
+        }
+
+        @media only screen and (orientation: portrait) and (min-width: 320px) { // iPhone 4 or below
+            .logo, .services {
+                .wrapper {
+                    position: relative;
+                }
+            }
+        }
+        @media only screen and (orientation: landscape) and (min-width: 480px) { // iPhone 4 or below
+            .logo, .services {
+                position: absolute;
+                height: 100%;
+            }
+            .logo {
+                width: 45%;
+
+                .wrapper {
+                    width: 180px;
+                }
+            }
+            .services {
+                width: 55%;
+                font-size: 13px;
+
+                .wrapper {
+                    width: 260px;
+
+                    div.authOptions {
+                        width: 250px;
+
+                        div.input {
+                            width: 175px;
+
+                            input {
+                                width: 168px;
+                                margin-bottom: 10px;
+                            }
+                        }
+                        div.authDivider {
+                            margin-bottom: 10px;
+
+                            div.divider {
+                                width: 22%;
+                            }
+                            div.or {
+                                width: 56%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        @media only screen and (min-width: 533px) { // HTC Desire
+            .logo, .services {
+                position: absolute;
+                height: 100%;
+
+                .wrapper {
+                    @include centralize();
+                }
+            }
+            .logo {
+                width: 45%;
+                height: 230px;
+
+                .wrapper {
+                    width: 188px;
+                }
+            }
+            .services {
+                width: 55%;
+
+                .wrapper div.authOptions {
+                    width: 280px;
+
+                    div.input {
+                        width: 205px;
+
+                        input {
+                            width: 205px;
+                        }
+                    }
+                }
+            }
+        }
+        @media only screen and (min-width: 600px) { // Samsung Galaxy Tab / Nexus 7
+            .services .wrapper {
+                width: 300px;
+            }
+        }
+        @media only screen and (min-width: 800px) { // Samsung Galaxy Tab 7
+            .logo, .services {
+                position: absolute;
+                height: 100%;
+            }
+            .logo {
+                width: 50%;
+            }
+            .services {
+                width: 50%;
+            }
+        }
+
+        @media only screen and (orientation: landscape) and (min-height: 320px) {
+            div.footer {
+                @include position(null, null, 8px, 8px);
+            }
+        }
+        @media only screen and (orientation: portrait) and (max-height: 480px) {
+            div.logo .wrapper {
+                margin-top: 22px;
+            }
+        }
+        @media only screen and (orientation: portrait) {
+            div.logo {
+                .icon-IZCircle {
+                    margin-right: 12px;
+                    float: left;
+                }
+            }
+        }
+    }
+
     div.logo {
         @include dimenPos(210px, 280px);
         @include position(0, 10px, 10px);
         margin: auto;
         padding: 15px;
     }
-    div.authOptions {
+    .services .wrapper div.authOptions {
         @include dimenPos(320px, 313px);
         @include position(0, 0, 0, 0);
         margin: auto;
@@ -263,11 +455,9 @@ $pageOffset: 70px; // 70px for transition bounce down more
                     line-height: $height;
 
                     .text {
-                        @media only screen and (min-width: 160px) {
-                            padding-left: 8px;
-                        }
-                        @media only screen and (min-width: 320px) {
-                            padding-left: 15px;
+                        padding-left: 12px;
+                        strong {
+                            padding-left: 5px;
                         }
                     }
                 }
@@ -303,107 +493,62 @@ $pageOffset: 70px; // 70px for transition bounce down more
             }
             div.or {
                 width: 46%;
-                font-size: 12px;
+                font-size: 11px;
                 text-align: center;
             }
             div.clear {
                 clear: both;
             }
         }
-
-        div.input {
-            width: 230px;
-            margin: 0 auto;
-
-            input {
-                @include dimenBox(230px, null, 0 auto 20px, null, 0);
-                background-color: transparent;
-                border-bottom: 1px solid rgba(255, 255, 255, .75);
-                color: #fff;
-            }
-            ::-webkit-input-placeholder {
-                color: rgba(255, 255, 255, .6);
-            }
-        }
     }
 
-    div.footer {
-        @include position(null, null, 20px, 20px);
-        position: fixed;
-
-        .text {
-            display: inline;
-            font-size: 11px;
-        }
-        .button {
-            @include font(13px, #fff, 15px, bold);
-            @include boxModel(null, 5px 0, null, 5px);
-            padding: 5px 10px;
-            display: inline;
-            text-align: center;
-            background-color: rgba(255, 255, 255, .3);
-        }
-    }
-
-    @media only screen and (orientation: portrait) {
-        div.logo {
-            @include position(0, initial, initial, initial);
-            width: 330px;
-            margin-left: 6px;
-            
-            .icon-IZCircle {
-                margin-right: 12px;
-                float: left;
-            }
-        }
-    }
-    @media only screen and (orientation: landscape) {
-        div.authOptions {
-            left: inherit;
-            right: 40px;
-        }
-        div.footer {}
-    }
-    @media only screen and (min-width: 480px) {
-        div.authOptions {
-            width: 260px;
-            
-            div.withServices {
-                margin: 10px auto;
-
-                .inputWrap .input {
-                    width: 150px;
-
-                    .text {
-                        font-size: 13px;
-                    }
-                }
-            }
-            div.authDivider {
-                div.authDivider {
-                    margin: 10px auto;
-                }
-                div.or {
-                    font-size: 10px;
-                }
-            }
-            div.input input {
-                font-size: 15px;
-            }
-        }
-    }
-    @media only screen and (min-height: 320px) {
-        div.authOptions {
-            right: 8px;
-
-            div.authDivider {
-                margin: 10px auto;
-            }
-        }
-        div.footer {
-            @include position(null, null, 10px, 10px);
-        }
-    }
+//    @media only screen and (orientation: landscape) {
+//        div.authOptions {
+//            left: inherit;
+//            right: 40px;
+//        }
+//        div.footer {}
+//    }
+//    @media only screen and (min-width: 480px) {
+//        div.authOptions {
+//            width: 260px;
+//
+//            div.withServices {
+//                margin: 10px auto;
+//
+//                .inputWrap .input {
+//                    width: 150px;
+//
+//                    .text {
+//                        font-size: 13px;
+//                    }
+//                }
+//            }
+//            div.authDivider {
+//                div.authDivider {
+//                    margin: 10px auto;
+//                }
+//                div.or {
+//                    font-size: 10px;
+//                }
+//            }
+//            div.input input {
+//                font-size: 15px;
+//            }
+//        }
+//    }
+//    @media only screen and (min-height: 320px) {
+//        div.authOptions {
+//            right: 8px;
+//
+//            div.authDivider {
+//                margin: 10px auto;
+//            }
+//        }
+//        div.footer {
+//            @include position(null, null, 10px, 10px);
+//        }
+//    }
 }
 
 /*

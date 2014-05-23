@@ -74,42 +74,44 @@ html.no-js
     // inject:js 
     // endinject 
     // endbuild 
-
     script(type='text/ng-template', id='1_login-page')
       .pt-page
         .login-bg
 
-        .logo 
-          div.icon-IZCircle(style='font-size:48px; font-weight:bold;')
-          div(style='padding:20px 0 0; font-size:14px; line-height:14px; font-weight:bold;') Everything is in good hand
-          div(style='font-size:10px;') Reliable home security & automation system.
+        .row.loginPage
+          .logo
+            .wrapper
+              div.icon-IZCircle(style='font-size:48px; font-weight:bold;')
+              div(style='padding:20px 0 0; font-size:14px; line-height:14px; font-weight:bold;') Everything is in good hand
+              div(style='font-size:10px;') Reliable home security & automation system.
+          .services
+            .wrapper
+              .authOptions
+                .withServices
+                  .inputWrap.facebook
+                    .icon.icon-facebook
+                    .input
+                      span.text
+                        span(translate) Sign in with
+                        strong(translate) Facebook
+                  .inputWrap.google
+                    .icon.icon-gplus
+                    .input
+                      span.text
+                        span(translate) Sign in with
+                        strong(translate) Google+
+                .authDivider
+                  .divider.pull-left
+                  .or(translate) Or log in with your email
+                  .divider.pull-right
+                  .clear
+                .input
+                  input(type='text', placeholder='Username or email address', ng-model='username')
+                  input(type='password', placeholder='Password', ng-model='password')
+          div.footer
+            div.text(translate) Don't have an account yet?
+            div.button(translate) Sign up
 
-        .authOptions
-          .withServices
-            .inputWrap.facebook
-              .icon.icon-facebook
-              .input
-                span.text
-                  span(translate) Sign in with 
-                  strong(translate) Facebook
-            .inputWrap.google
-              .icon.icon-gplus
-              .input
-                span.text
-                  span(translate) Sign in with 
-                  strong(translate) Google+
-          .authDivider
-            .divider.pull-left
-            .or(translate) Or log in with your email
-            .divider.pull-right
-            .clear
-          .input
-            input(type='text', placeholder='Username or email address', ng-model='username')
-            input(type='password', placeholder='Password', ng-model='password')
-
-        div.footer
-          div.text(translate) Don't have an account yet?
-          div.button(translate) Sign up
     script(type='text/ng-template', id='2_menu-page.s')
       .pt-page.mainmenu
         .logo.text-center(style='margin:50px 0 20px;')

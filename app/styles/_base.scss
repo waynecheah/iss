@@ -86,6 +86,11 @@ $transform-style: preserve-3d;
     }
     @include fontStyle($fontWeight, $fontStyle, $fontFamily);
 }
+@mixin centralize () {
+    @include position(0, 0, 0, 0);
+    margin: auto;
+    position: absolute;
+}
 @mixin bgGradient ($bg...) {
     background-image: gradient($bg);
 }
