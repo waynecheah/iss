@@ -14,7 +14,9 @@ glApp
           <div translate class="name">{{item.name}}</div>
           <div translate class="description">{{item.description}}</div>
         </div>
-        <div translate class="col-xs-4 col-md-2 text-right status">{{ item.status | joinArray }}</div>
+        <div translate class="col-xs-4 col-md-2 text-right status" ng-class="item.statusCls" hm-tap="statusAct($index)">
+          {{ item.status | joinArray }}
+        </div>
       </div>
     </li>
   </ul>

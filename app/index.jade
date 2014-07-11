@@ -13,7 +13,7 @@ html.no-js
     // endbower 
     // endbuild 
 
-    // build:css({build,app}) styles/main.css 
+    // build:css styles/main.css 
     // inject:css 
     // endinject 
     // endbuild 
@@ -70,7 +70,7 @@ html.no-js
     // endbower 
     // endbuild 
   
-    // build:js({.tmp,app}) scripts/scripts.js 
+    // build:js scripts/scripts.js 
     // inject:js 
     // endinject 
     // endbuild 
@@ -88,13 +88,13 @@ html.no-js
             .wrapper
               .authOptions
                 .withServices
-                  .inputWrap.facebook
+                  .inputWrap.facebook(hm-tap='signin()')
                     .icon.icon-facebook
                     .input
                       span.text
                         span(translate) Sign in with
                         strong(translate) Facebook
-                  .inputWrap.google
+                  .inputWrap.google(hm-tap='signin()')
                     .icon.icon-gplus
                     .input
                       span.text
@@ -112,12 +112,12 @@ html.no-js
             div.text(translate) Don't have an account yet?
             div.button(translate) Sign up
 
-    script(type='text/ng-template', id='2_menu-page.s')
+    script(type='text/ng-template', id='2_menu-page-s')
       .pt-page.mainmenu
-        .logo.text-center(style='margin:50px 0 20px;')
+        .menu-logo.text-center(style='margin:50px 0 20px;')
           span.icon-IZCircle(style='font-size:56px;')
         ul.mainmenu
-          li(hm-tap="goState(item.state)" ng-repeat='item in items', translate) {{ item | isLink }}
+          li(hm-tap="goState($index)", ng-repeat='item in items', translate) {{ item | isLink }}
     
     script(type='text/ng-template', id='3_dashboard')
       .pt-page.ui-pageIcon.lgRow(ng-class='alarmStatus')

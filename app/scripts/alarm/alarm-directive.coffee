@@ -2,9 +2,9 @@
 
 glApp
 
-.directive 'alarmToolbar', ($rootScope) ->
+.directive 'alarmToolbar', ->
     restrict: 'E'
-    controller: ($scope, $element, $timeout, gettext) ->
+    controller: ($rootScope, $scope, $element, $timeout, gettext) ->
         updateStatusText = ->
             if $rootScope.alarmStatus is 'armed'
                 $scope.statusIcon  = 'icon-Locked'
@@ -48,7 +48,6 @@ glApp
             $scope.keypad         = on
             $scope.onKeypad       = yes
             return
-
         $scope.closeKeypad = ->
             top = document.body.clientHeight - $element[0].firstChild.clientHeight
             $timeout ->
@@ -57,7 +56,7 @@ glApp
             , 50
             $timeout ->
                 $scope.onPasscode = no
-                $element.css 'top', null
+                #$element.css 'top', null
                 return
             , 350
 
@@ -69,7 +68,6 @@ glApp
             $scope.cancelTxt      = gettext 'Cancel'
             $scope.showOk         = no
             return
-
         $scope.keyPress = (key) ->
             $scope.numbers.push key
             $scope.cancelTxt      = gettext 'Delete'
@@ -80,18 +78,28 @@ glApp
                 return
             , 100
             return
-
         $scope.cancel = ->
             length = $scope.numbers.length
             $scope.cancelTxt = gettext 'Cancel' if length is 1
             $scope.showOk    = no if length is 4
             if length then $scope.numbers.pop() else $scope.closeKeypad()
             return
-
         $scope.submit = ->
             console.warn $scope.numbers.join ''
+
+            if $rootScope.alarmStatus is 'emergency'
+                $rootScope.alarmStatus = 'disarmed'
+                $rootScope.$broadcast 'panic:off'
+            else if $rootScope.alarmStatus is 'disarmed'
+                $rootScope.alarmStatus = 'armed'
+            else
+                $rootScope.alarmStatus = 'disarmed'
+            $scope.closeKeypad()
             return
 
+        $rootScope.$on 'panic:on', ->
+            updateStatusText()
+            return
         return
     template: '
 <div class="row status">

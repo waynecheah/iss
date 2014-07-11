@@ -2,7 +2,7 @@
 
 glApp
 
-.controller 'AppCtrl', ($scope, $rootScope, $state, $timeout) ->
+.controller 'AppCtrl', ($scope, $rootScope, $log, $state, $timeout) ->
     history   = []
     oneFxCtrl = ''
     getIndex  = (route) ->
@@ -12,10 +12,18 @@ glApp
     # END getIndex
 
     isSingleFx = (current_route, previous_route) ->
+        current_id  = getIndex current_route
+        previous_id = getIndex previous_route
+
         str1 = current_route.substr -2
         str2 = previous_route.substr -2
-        return 1 if str1 is '.s'
+ 
+        return 1 if str1 is '.s' # single fx when go to both previous and forward page
         return 2 if str2 is '.s'
+        return 1 if str1 is '-s' and current_id < previous_id # single fx only when go previous page
+        return 2 if str2 is '-s' and current_id > previous_id
+        return 1 if str1 is '+s' and current_id > previous_id # single fx only when go forward page
+        return 2 if str2 is '+s' and current_id < previous_id
         false
     # END isSingleFx
 
@@ -38,7 +46,7 @@ glApp
             fx  = if ctrl is oneFxCtrl then cls else fx
         else
             fx
-        console.log 'use fx:', fx
+        $log.debug 'use fx:', fx
         fx
 
     $rootScope.$on '$stateChangeSuccess', (e, current, toParams, previous, fromParams) ->
@@ -59,11 +67,11 @@ glApp
 
             if singleFx
                 $scope.singleFx = 'singleFx'
-                console.info 'this page change use single fx'
+                $log.debug 'this page change use single fx'
                 curr_ctrl = current.controller
                 prev_ctrl = previous.controller
                 oneFxCtrl = if singleFx is 1 then curr_ctrl else prev_ctrl # Only slide this ctrl
-                console.info 'Only slide this ctrl', oneFxCtrl
+                $log.debug 'Only slide this ctrl', oneFxCtrl
             else
                 $scope.singleFx = ''
                 oneFxCtrl       = ''
@@ -86,15 +94,20 @@ glApp
     return
 
 
-.controller 'LoginCtrl', ($scope, $rootScope) ->
+.controller 'LoginCtrl', ($scope, $rootScope, $state) ->
     $rootScope.toolbar = no
+    $scope.pageFxClass = $rootScope.pageFx 'LoginCtrl', 'cube'
+    $scope.signin = ->
+        $state.go 'mainmenu'
+        return
     return
 
-.controller 'MenuCtrl', ($scope, $rootScope) ->
+.controller 'MenuCtrl', ($scope, $rootScope, $state, $timeout) ->
     $scope.pageFxClass = $rootScope.pageFx 'MenuCtrl', 'one-slide'
     $scope.items = [
         name: 'Wave'
         href: '#/wave'
+        state: 'dashboard'
     ,
         name: 'Profile'
         href: ''
@@ -107,10 +120,16 @@ glApp
     ,
         name: 'Logout'
         href: '#/signin'
+        state: 'login'
     ]
+
+    $scope.goState = (i) ->
+        $state.go $scope.items[i].state if 'state' of $scope.items[i] is true
+        return
     return
 
 .controller 'MainCtrl', ($scope, $rootScope, $location, $state) ->
+    $rootScope.toolbar = yes
     $scope.pageFxClass = $rootScope.pageFx 'MainCtrl'
     $scope.title       = 'Alarm Dashboard'
     $scope.leftIco     = 'icon-MainMenu'
@@ -288,16 +307,32 @@ glApp
         status: 'Ok'
     ]
     return
-.controller 'Alarm.EmergencyCtrl', ($scope) ->
+.controller 'Alarm.EmergencyCtrl', ($rootScope, $scope) ->
     $scope.items = [
         leftIco: 'icon-Siren'
         name: 'Panic'
-        status: 'N/A'
+        status: 'off'
+        statusCls: 'button off'
     ,
         leftIco: 'icon-Message'
         name: 'Silent'
         status: 'N/A'
+        statusCls: 'button'
     ]
+    $scope.statusAct = (i) ->
+        if i is 0
+            if $scope.items[i].status is 'off'
+                $rootScope.alarmStatus    = 'emergency'
+                $scope.items[i].status    = 'Activated'
+                $scope.items[i].statusCls = 'button on'
+                $rootScope.$broadcast 'panic:on'
+        return
+
+    $rootScope.$on 'panic:off', ->
+        $scope.items[0].status    = 'off'
+        $scope.items[0].statusCls = 'button off'
+        return
+
     return
 .controller 'Alarm.LogsCtrl', ($scope) ->
     $scope.items = [
@@ -330,4 +365,4 @@ glApp
 
 .filter 'isLink', ->
     (data) ->
-        if 'href' of data is on and data.href then "<a href='#{data.href}'>#{data.name}</a>" else data.name
+        if 'href' of data is on and data.href then "<a href='javascript:;'>#{data.name}</a>" else data.name

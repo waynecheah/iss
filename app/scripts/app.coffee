@@ -36,7 +36,7 @@ glApp =
               controller: 'LoginCtrl'
           .state 'mainmenu',
               url: '/'
-              templateUrl: '2_menu-page.s'
+              templateUrl: '2_menu-page-s'
               controller: 'MenuCtrl'
 
           .state 'dashboard',
@@ -66,14 +66,27 @@ glApp =
               controller: 'Alarm.LogsCtrl'
       return
 
-  .animation '.slide', ($rootScope) ->
+  .animation '.slide', ($rootScope, $timeout) ->
       enter: (el, done) ->
-          #console.warn 'ENTER START: ', $rootScope.backFxClass
+          console.warn 'ENTER START: ', $rootScope.backFxClass
+          el.one 'animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', ->
+              $rootScope.backFxClass = ''
+          , false
+          done()
+  .animation '.cube', ($rootScope, $timeout) ->
+      enter: (el, done) ->
+          console.warn 'ENTER START: ', $rootScope.backFxClass
           el.one 'animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', ->
               $rootScope.backFxClass = ''
           , false
           done()
   .animation '.one-slide', ($rootScope) ->
+      enter: (el, done) ->
+          el.one 'animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', ->
+              $rootScope.backFxClass = ''
+          , false
+          done()
+  .animation '.one-updown', ($rootScope) ->
       enter: (el, done) ->
           el.one 'animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', ->
               $rootScope.backFxClass = ''

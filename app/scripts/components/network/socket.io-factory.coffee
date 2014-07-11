@@ -5,10 +5,10 @@ glApp
 .factory 'socket', ($rootScope, $timeout, $log) ->
     socket  = null
     servers = [
-        '127.0.0.1:8080'
         'innerzon.com:8080'
         'innerzon.com.my:8080'
         'cheah.homeip.net:8080'
+        '127.0.0.1:8080'
     ]
     curServerId = 0
     serverInUse = ''

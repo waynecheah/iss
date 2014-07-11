@@ -561,6 +561,8 @@ $tallHeaderHeight: 100px;
 $tabHeight: 87px;
 $alarmToolbarHeight: 66px;
 div.pt-page {
+    transition: background 800ms linear;
+
     /*
      * Page Header
      */
@@ -672,6 +674,31 @@ div.pt-page {
 
                         .ico {
                             font-size: .9em !important;
+                        }
+                    }
+
+                    div.button {
+                        @include dimen(40px, 40px);
+                        float: right;
+                        margin-right: 8px;
+                        padding: 0;
+                        text-align: center;
+                        font-size: .7em;
+                        line-height: 38px;
+                        border: 1px dashed #fff;
+                        border-radius: 20px;
+                        opacity: .5;
+
+                        &.off {
+                            font-size: 20px;
+                            border-style: solid;
+                            opacity: 1;
+                        }
+                        &.on {
+                            font-size: 18px;
+                            border: 0;
+                            width: 65px;
+                            opacity: 1;
                         }
                     }
                 }
@@ -797,7 +824,7 @@ $buttonBorder: 2px;
     padding-top: 2px;
     background-color: rgba(50, 50, 50, .5);
     z-index: 10000;
-    -webkit-transition: top 300ms, background 300ms;
+    -webkit-transition: top 300ms, background;
     
     .status {
         min-height: 66px;
@@ -927,6 +954,7 @@ $buttonBorder: 2px;
                     font-weight: bold;
                     line-height: $buttonDimen - $buttonBorder;
                     border-radius: $buttonDimen / 2;
+                    transition: border 300ms linear;
 
                     &.onTap {
                         background-color: rgba(255, 255, 255, 0.66);
@@ -964,8 +992,25 @@ $nofx: nofx $duration $easing both;
 .slide.ng-enter, .one-slide.ng-enter {
     -webkit-animation: moveFromRight $duration $easing both $delay;
 }
+.cube.ng-leave {
+    -webkit-animation: rotateCubeLeftOut $duration $easing both;
+    z-index: 9999;
+}
+.cube.ng-enter {
+    -webkit-animation: rotateCubeLeftIn $duration $easing both $delay;
+}
+.one-slide.ng-enter {
+    z-index: 9999;
+}
+.one-updown.ng-leave {
+    -webkit-animation: moveToTop $duration $easing both;
+}
+.one-updown.ng-enter {
+    -webkit-animation: moveFromBottom $duration $easing both $delay;
+    z-index: 9999;
+}
 .singleFx { // this mean no fx apply to the page
-    .slide.ng-leave, .slide.ng-enter {
+    .slide.ng-leave, .slide.ng-enter, .updown-ng-leave, .updown-ng-enter {
         -webkit-animation: $nofx;
     }
 }
@@ -977,7 +1022,21 @@ $nofx: nofx $duration $easing both;
     .slide.ng-enter, .one-slide.ng-enter {
         -webkit-animation: moveFromLeft $duration $easing both $delay;
     }
-    .one-slide.ng-leave, .one-slide.ng-enter {
+    .cube.ng-leave {
+        -webkit-animation: rotateCubeRightOut $duration $easing both;
+        z-index: 9999;
+    }
+    .cube.ng-enter {
+        -webkit-animation: rotateCubeRightIn $duration $easing both $delay;
+    }
+    .one-updown.ng-leave {
+        -webkit-animation: moveToBottom $duration $easing both;
+        z-index: 9999;
+    }
+    .one-updown.ng-enter {
+        -webkit-animation: moveFromTop $duration $easing both $delay;
+    }
+    .one-slide.ng-leave, .one-slide.ng-enter, .one-updown.ng-leave, .one-updown.ng-enter {
         z-index: 9999;
     }
 
@@ -1060,12 +1119,31 @@ $nofx: nofx $duration $easing both;
 @-webkit-keyframes moveFromLeft {
     from { -webkit-transform: translateX(-100%); }
 }
+// slide top (forward)
+@-webkit-keyframes moveToTop {
+    to { -webkit-transform: translateY(-100%); }
+}
+@-webkit-keyframes moveFromTop {
+    from { -webkit-transform: translateY(-100%); }
+}
+// slide bottom (backward)
+@-webkit-keyframes moveToBottom {
+    to { -webkit-transform: translateY(100%); }
+}
+@-webkit-keyframes moveFromBottom {
+    from { -webkit-transform: translateY(100%); }
+}
 
 @-webkit-keyframes moveToLeftFade {
     to { opacity: 0.3; -webkit-transform: translateX(-100%); }
 }
 @-webkit-keyframes moveToRightFade {
     to { opacity: 0.3; -webkit-transform: translateX(100%); }
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(359deg); }
 }
 
 /* ==========================================================================
